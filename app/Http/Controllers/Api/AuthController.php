@@ -49,7 +49,7 @@ class AuthController extends BaseController
         }
 
         if(!Hash::check($request->password, $user->password)) {
-            return $this->sendError('Auth error.','Invalid password',403);
+            return $this->sendError('Auth error.','Incorrect password',403);
         }
 
         $success['token'] =  $user->createToken('MyApp')->accessToken;
