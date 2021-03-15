@@ -37,4 +37,16 @@ class BaseController extends Controller
         }
         return response()->json($response, $code);
     }
+
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ifContains($collection, $value)
+    {
+        if (!$collection->contains($value)) {
+            return $this->sendError('Not Found', null, 404);
+        }
+    }
 }

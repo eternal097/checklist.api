@@ -25,7 +25,7 @@ class ChecklistController extends BaseController
             $checklists = 'Checklist is empty';
         }
 
-        return $this->sendResponse($checklists, 'Checklists retrieved successfully.');
+        return $this->sendResponse($checklists->toArray(), 'Checklists retrieved successfully.');
     }
 
     /**
@@ -41,7 +41,20 @@ class ChecklistController extends BaseController
             'title' => $request->title,
         ]);
 
-        return $this->sendResponse($checklist->toArray(), 'Checklists created successfully.');
+        return $this->sendResponse($checklist->toArray(), 'Checklist created successfully.', 201);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Checklist $checklist)
+    {
+        return redirect()->action(
+            'TaskController@index', ['id' => $checklist->id]
+        );
     }
 
     /**
@@ -55,15 +68,11 @@ class ChecklistController extends BaseController
         $user_checklists = User::findOrFail(Auth::id())->checklists;
         $checklist = Checklist::find($id);
 
-        if ($user_checklists->contains($checklist)) {
-
-            $checklist->delete();
-
-            return $this->sendResponse($checklist->toArray(), 'Product deleted successfully.',204);
-
-        } else {
-
+        if (!$user_checklists->contains($checklist)) {
             return $this->sendError('Not Found', null, 404);
         }
+
+        $checklist->delete();
+        return $this->sendResponse($checklist->toArray(), 'Product deleted successfully.',204);
     }
 }
