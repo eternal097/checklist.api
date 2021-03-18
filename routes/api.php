@@ -23,8 +23,6 @@ Route::namespace('Api')->group(function () {
         Route::post('/logout', 'AuthController@logout');
         //Checklists resource
         Route::resource('checklists','ChecklistController');
-        //Page with tasks
-        //Route::get('checklists/{id}/tasks', 'TaskController@index');
         //Tasks resource
         Route::resource('checklists/{id}/tasks','TaskController');
     });

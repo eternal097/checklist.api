@@ -32,7 +32,7 @@ class TaskRequest extends FormRequest
             case 'PUT':
                 return [
                     'id' => 'integer|exists:task,id',
-                    'completed' => 'boolean',
+                    'completed' => 'required|boolean',
                 ];
             case 'DELETE':
                 return [

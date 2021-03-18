@@ -48,7 +48,18 @@ class TaskController extends BaseController
             'completed' => 0,
         ]);
 
-        return $this->sendResponse($task->toArray(), 'Task created successfully.', 201);
+        return $this->sendResponse($task->toArray(), 'Task created successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Checklist $checklist)
+    {
+        return $this->sendError('Not Found', null, 404);
     }
 
     /**
@@ -58,9 +69,21 @@ class TaskController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $checklist_id, $task_id)
     {
-        //
+        $user_checklists = User::find(Auth::id())->checklists;
+        if (!$user_checklists->contains($checklist_id)) {
+            return $this->sendError('Not Found', null, 404);
+        }
+
+        $user_tasks = Checklist::find($checklist_id)->tasks;
+        if (!$user_tasks->contains($task_id)) {
+            return $this->sendError('Not Found', null, 404);
+        }
+        // dd($request->all());
+        $task = Task::find($task_id);
+        $task->update($request->all());
+        return $this->sendResponse($task->toArray(), 'Product updated successfully.');
     }
 
     /**
@@ -83,6 +106,6 @@ class TaskController extends BaseController
 
         $task = Task::find($task_id);
         $task->delete();
-        return $this->sendResponse($task->toArray(), 'Product deleted successfully.',204);
+        return $this->sendResponse($task->toArray(), 'Product deleted successfully.');
     }
 }
