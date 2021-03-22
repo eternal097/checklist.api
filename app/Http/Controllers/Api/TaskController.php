@@ -25,7 +25,11 @@ class TaskController extends BaseController
         }
 
         $tasks = Checklist::find($checklist_id)->tasks;
-        return $this->sendResponse($tasks->toArray(), 'Tasks retrieved successfully.');
+        if ($tasks->count() == null) {
+            $tasks = 'Tasks is empty';
+        }
+
+        return $this->sendResponse($tasks, 'Tasks retrieved successfully.');
     }
 
     /**
@@ -106,6 +110,6 @@ class TaskController extends BaseController
 
         $task = Task::find($task_id);
         $task->delete();
-        return $this->sendResponse($task->toArray(), 'Product deleted successfully.');
+        return $this->sendResponse($task->toArray(), 'Task deleted successfully.');
     }
 }

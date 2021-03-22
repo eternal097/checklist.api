@@ -25,7 +25,7 @@ class ChecklistController extends BaseController
             $checklists = 'Checklist is empty';
         }
 
-        return $this->sendResponse($checklists->toArray(), 'Checklists retrieved successfully.');
+        return $this->sendResponse($checklists, 'Checklists retrieved successfully.');
     }
 
     /**
@@ -73,6 +73,6 @@ class ChecklistController extends BaseController
         }
 
         $checklist->delete();
-        return $this->sendResponse($checklist->toArray(), 'Product deleted successfully.',204);
+        return $this->sendResponse($checklist->toArray(), 'Checklist deleted successfully.',204);
     }
 }
