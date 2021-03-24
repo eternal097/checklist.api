@@ -18,7 +18,7 @@ class TaskController extends BaseController
      */
     public function index($checklist_id)
     {
-        $user_checklists = User::find(Auth::id())->checklists;
+        $user_checklists = Auth::user()->checklists;
 
         if (!$user_checklists->contains($checklist_id)) {
             return $this->sendError('Not Found', null, 404);
@@ -40,7 +40,7 @@ class TaskController extends BaseController
      */
     public function store(TaskRequest $request, $checklist_id)
     {
-        $user_checklists = User::find(Auth::id())->checklists;
+        $user_checklists = Auth::user()->checklists;
 
         if (!$user_checklists->contains($checklist_id)) {
             return $this->sendError('Not Found', null, 404);
@@ -75,7 +75,7 @@ class TaskController extends BaseController
      */
     public function update(TaskRequest $request, $checklist_id, $task_id)
     {
-        $user_checklists = User::find(Auth::id())->checklists;
+        $user_checklists = Auth::user()->checklists;
         if (!$user_checklists->contains($checklist_id)) {
             return $this->sendError('Not Found', null, 404);
         }
@@ -98,7 +98,7 @@ class TaskController extends BaseController
      */
     public function destroy(TaskRequest $request, $checklist_id, $task_id)
     {
-        $user_checklists = User::find(Auth::id())->checklists;
+        $user_checklists = Auth::user()->checklists;
         if (!$user_checklists->contains($checklist_id)) {
             return $this->sendError('Not Found', null, 404);
         }

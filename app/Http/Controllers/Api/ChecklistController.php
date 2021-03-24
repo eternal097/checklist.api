@@ -7,9 +7,12 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\ChecklistRequest;
 use App\Http\Controllers\Api\BaseController as BaseController;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class ChecklistController extends BaseController
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +20,7 @@ class ChecklistController extends BaseController
      */
     public function index()
     {
-        $user = User::findOrFail(Auth::id());
+        $user = Auth::user();
 
         $checklists = $user->checklists;
 
@@ -36,6 +39,12 @@ class ChecklistController extends BaseController
      */
     public function store(ChecklistRequest $request)
     {
+        $user = Auth::user();
+
+        if (count($user->checklists) >= $user->max_checklist) {
+            return $this->sendError('Exceeded the maximum number of checklists.', 'Maximum number of checklists: '.$user->max_checklist.'.', 405);
+        }
+
         $checklist = Checklist::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
@@ -65,7 +74,7 @@ class ChecklistController extends BaseController
      */
     public function destroy(ChecklistRequest $request, $id)
     {
-        $user_checklists = User::findOrFail(Auth::id())->checklists;
+        $user_checklists = Auth::user()->checklists;
         $checklist = Checklist::find($id);
 
         if (!$user_checklists->contains($checklist)) {
