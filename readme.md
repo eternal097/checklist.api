@@ -27,7 +27,8 @@ PHP с использованием фреймворка (Yii2 или Laravel)
   'headers' => [
       'Accept' => 'application/json',
       'Authorization' => 'Bearer '.$accessToken,
-  ]
+  ];
+
 Для тестирования методов использовал Postman.
 
 Список адресов с методами RestAPI:
