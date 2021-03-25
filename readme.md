@@ -22,6 +22,27 @@ PHP с использованием фреймворка (Yii2 или Laravel)
 
 Сервис чеклистов на языке PHP с использованием фреймворка Laravel.
 
+Убедитесь, что API использует следующие заголовки, как указано ниже:
+
+  'headers' => [
+      'Accept' => 'application/json',
+      'Authorization' => 'Bearer '.$accessToken,
+  ]
+Для тестирования методов использовал Postman.
+
+Список адресов с методами RestAPI:
+- Register: метод:POST, URL: http://127.0.0.1:8000/api/register, form-data: name, email, password;
+- Login: метод:POST, URL: http://127.0.0.1:8000/api/login, form-data: email, password;
+- Logout: метод:POST, URL: http://127.0.0.1:8000/api/logout, Headers;
+- Список чеклистов: метод:GET, URL:http://127.0.0.1:8000/api/checklists, Headers;
+- Создать чеклист: метод:POST, URL:http://127.0.0.1:8000/api/checklists, Headers, form-data: title;
+- Удалить чеклист: метод:DELETE, URL:http://127.0.0.1:8000/api/checklists/{id}, Headers;
+- Список пунктов чеклиста: метод:GET, URL:http://127.0.0.1:8000/api/checklists/{id}/tasks, Headers;
+- Добавить пункт в чеклист: метод:POST, URL:http://127.0.0.1:8000/api/checklists/{id}/tasks, Headers, form-data: message;
+- Удалить пункт из чеклиста: метод:DELETE, URL:http://127.0.0.1:8000/api/checklists/{id}/tasks/{id}, Headers;
+- Отметить пункт чеклиста "Выполнен": метод:PUT, URL:http://127.0.0.1:8000/api/checklists/{id}/tasks/{id}?completed=1, Headers;
+- Отметить пункт чеклиста "Не выполнен": метод:PUT, URL:http://127.0.0.1:8000/api/checklists/{id}/tasks/{id}?completed=0, Headers;
+
 ## Подготовительные действия:
 
 1. Клонировать репозиторий на ваш компьютер командой git clone https://github.com/eternal097/check_lists.git;
@@ -32,6 +53,7 @@ PHP с использованием фреймворка (Yii2 или Laravel)
 - composer update;
 - php artisan key:generate;
 - php artisan migrate --seed;
+- php artisan passport:install.
 
 ## Информация о доступах:
 

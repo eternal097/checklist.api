@@ -12,6 +12,16 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 class TaskController extends BaseController
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+      public function __construct()
+      {
+          $this->middleware('checkBlockJson');
+      }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

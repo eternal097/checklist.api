@@ -12,12 +12,21 @@ use Spatie\Permission\Models\Permission;
 
 class ChecklistController extends BaseController
 {
-
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+      public function __construct()
+      {
+          $this->middleware('checkBlockJson');
+      }
+      /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+     
     public function index()
     {
         $user = Auth::user();
